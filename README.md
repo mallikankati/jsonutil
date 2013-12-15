@@ -18,6 +18,10 @@ Ex:
     String jsonString = JsonUtil.toJson(testBean);
     //converting json to java map
     Map<String, String> map = JsonUtil.fromJson(jsonString);
+    //converting map to json
+    String jsonString = JsonUtil.toJson(map);
     //converting json to list of java beans
     List<testBean> testBeanList = JsonUtil.fromJson(jsonString, ArrayList.class, TestBean.class)
+    //converting list to json
+    String jsonString = JsonUtil.toJson(testBeanList)
     
