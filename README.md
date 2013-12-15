@@ -8,7 +8,7 @@ In order to use this util your java beans should follow java bean specification 
 If your java beans contains any collections like list, set, map etc., they should follow java 1.5 generics. Otherwise collection conversion may go wrong.
 
 
-Note: This utility will not work if you send generics like List<Object>, Map<String, Object> etc.,
+Note: This utility will not work if you send generics like List\<Object\>, Map\<String, Object\> etc.,
 
 Ex: 
 
