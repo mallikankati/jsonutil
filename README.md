@@ -1,8 +1,7 @@
 jsonutil
 ========
 
-Simple and elegantly converts json to java bean and vice versa. It will just depends on json.jar from json.org. Code footprint is very small and very fast.
-
+Simple and elegantly converts json to java bean and vice versa. It just depends on json.jar from json.org. Code footprint is very small and very fast.
 
 In order to use this util your java beans should follow java bean specification like getter should follow respected setter methods.
 
