@@ -16,8 +16,8 @@ Ex:
     TestBean testBean = JsonUtil.fromJson(jsonString, TestBean.class);
     //converting Java bean to json
     String jsonString = JsonUtil.toJson(testBean);
-    //converting json to java map
-    Map<String, String> map = JsonUtil.fromJson(jsonString);
+    //converting json to java map, need to send concrete map and its key/value types
+    Map<String, String> map = JsonUtil.fromJson(jsonString, HashMap.class, String.class, String.class);
     //converting map to json
     String jsonString = JsonUtil.toJson(map);
     //converting json to list of java beans
