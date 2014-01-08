@@ -43,7 +43,8 @@ public class JsonUtilTest extends TestCase {
         test.put("key3", "value3");
         String json = JsonUtil.toJson(test);
         logger.info(json);
-        Map<String, String> temp = JsonUtil.fromJson(json);
+        Map<String, String> temp = JsonUtil.fromJson(json, HashMap.class,
+                String.class, String.class);
         logger.info(temp + "");
 
         validateMap(test, temp);
@@ -56,7 +57,8 @@ public class JsonUtilTest extends TestCase {
         String json = JsonUtil.toJson(complexMap);
         logger.info(json);
 
-        Map<String, TestJsonBean> temp = JsonUtil.fromJson(json);
+        Map<String, TestJsonBean> temp = JsonUtil.fromJson(json, HashMap.class,
+                String.class, TestJsonBean.class);
         logger.info(temp + "");
 
         validateMap(complexMap, temp);
@@ -77,9 +79,9 @@ public class JsonUtilTest extends TestCase {
         list = JsonUtil.fromJson(json, ArrayList.class, HashMap.class);
         logger.info(list + "");
     }
-    
-    public void testSimpleList(){
-        
+
+    public void testSimpleList() {
+
     }
 
     public void testComplexBean() {
@@ -87,7 +89,7 @@ public class JsonUtilTest extends TestCase {
         String json = JsonUtil.toJson(bean);
         logger.info(json);
         TestJsonBean outputBean = JsonUtil.fromJson(json, TestJsonBean.class);
-        validateTestBean(bean, outputBean);
+        validateTestJsonBean(bean, outputBean);
         logger.info(outputBean + "");
     }
 
@@ -144,7 +146,7 @@ public class JsonUtilTest extends TestCase {
         return bean;
     }
 
-    private void validateTestBean(TestJsonBean sourceBean,
+    private void validateTestJsonBean(TestJsonBean sourceBean,
             TestJsonBean convertedBean) {
         assertNotNull(sourceBean);
         assertNotNull(convertedBean);
@@ -213,6 +215,9 @@ public class JsonUtilTest extends TestCase {
             if (obj instanceof TestChildBean) {
                 validateTestChildBean((TestChildBean) srcMap.get(key),
                         (TestChildBean) convMap.get(key));
+            } else if (obj instanceof TestJsonBean) {
+                validateTestJsonBean((TestJsonBean) srcMap.get(key),
+                        (TestJsonBean) convMap.get(key));
             } else {
                 assertEquals(srcMap.get(key), convMap.get(key));
             }

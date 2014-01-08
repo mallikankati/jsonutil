@@ -53,8 +53,11 @@ import org.json.JSONString;
 /**
  * Json utility to convert json to object and object to json.
  * 
- * Note : Bean must follow java bean specification from Sun other wise this
- * utility will not work.
+ * Note : <br />
+ * 1) Bean must follow java bean specification from Sun other wise this utility
+ * will not work.
+ * 
+ * 2) Bean should not contain inner beans
  * 
  * @author mallik
  * @version 1.0
@@ -88,12 +91,12 @@ public class JsonUtil {
         return target;
     }
 
-    public static <T, S> Map<T, S> fromJson(String jsonString) {
+    public static <T, S> Map<T, S> fromJson(String jsonString,
+            Class<?> mapClass, Class<T> keyClass, Class<S> sClass) {
         Map<T, S> target = null;
         try {
-            target = new HashMap<T, S>();
             JSONObject jsonObject = new JSONObject(jsonString);
-            target = fromJson(jsonObject);
+            target = fromJson(jsonObject, mapClass, keyClass, sClass);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
@@ -102,7 +105,8 @@ public class JsonUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T, S> Map<T, S> fromJson(JSONObject jsonObject) {
+    public static <T, S> Map<T, S> fromJson(JSONObject jsonObject,
+            Class<?> mapClass, Class<T> keyClass, Class<S> sClass) {
         Map<T, S> target = null;
         try {
             target = new HashMap<T, S>();
@@ -110,7 +114,12 @@ public class JsonUtil {
             while (keys.hasNext()) {
                 String key = keys.next();
                 Object value = jsonObject.get(key);
-                target.put((T) key, (S) JSONObject.wrap(value));
+                if (value instanceof JSONObject) {
+                    target.put((T) key,
+                            localJson(jsonObject.getJSONObject(key), sClass));
+                } else {
+                    target.put((T) key, (S) JSONObject.wrap(value));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
